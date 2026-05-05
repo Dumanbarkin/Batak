@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BATAK · Premium Salon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --felt-deep:    #062014;
+    --felt-mid:     #0c3525;
+    --felt-light:   #16553c;
+    --felt-edge:    #03130b;
+    --gold:         #e8c97a;
+    --gold-bright:  #ffe9a8;
+    --gold-deep:    #a47a2c;
+    --ivory:        #f5ecd6;
+    --ink:          #0a1612;
+    --red:          #c93a3a;
+    --red-bright:   #ff6f6f;
+    --glass:        rgba(255, 248, 220, 0.06);
+    --glass-border: rgba(232, 201, 122, 0.25);
+    --glass-glow:   rgba(232, 201, 122, 0.15);
+    --shadow-soft:  0 8px 32px rgba(0, 0, 0, 0.45);
+    --shadow-deep:  0 20px 60px rgba(0, 0, 0, 0.55);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100vh; font-family: 'Inter', sans-serif; color: var(--ivory); overflow-x: hidden; }
+  body {
+    background: radial-gradient(ellipse at 50% 35%, var(--felt-light) 0%, var(--felt-mid) 35%, var(--felt-deep) 75%, var(--felt-edge) 100%), var(--felt-deep);
+    background-attachment: fixed;
+    position: relative;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0;
+    background-image: repeating-radial-gradient(circle at 0 0, transparent 0, rgba(0,0,0,0.04) 1px, transparent 2px, transparent 5px);
+    opacity: 0.6; pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: ""; position: fixed; top: -30vh; left: 50%; transform: translateX(-50%);
+    width: 80vw; height: 60vh;
+    background: radial-gradient(ellipse, rgba(232, 201, 122, 0.08) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* LOGIN */
+  .login {
+    position: relative; z-index: 1;
+    max-width: 420px; margin: 6vh auto; padding: 48px 40px;
+    background: linear-gradient(145deg, rgba(20,40,30,0.85), rgba(10,25,18,0.85));
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid var(--glass-border); border-radius: 24px;
+    box-shadow: var(--shadow-deep), inset 0 1px 0 rgba(255, 248, 220, 0.08), 0 0 60px var(--glass-glow);
+  }
+  .login-crest {
+    text-align: center; font-family: 'Cormorant Garamond', serif; font-weight: 600;
+    letter-spacing: 0.4em; font-size: 11px; color: var(--gold); text-transform: uppercase; margin-bottom: 6px;
+  }
+  .login h1 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 56px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    letter-spacing: 0.05em; line-height: 1; margin-bottom: 8px;
+  }
+  .login-subtitle {
+    text-align: center; font-size: 12px; letter-spacing: 0.3em;
+    color: rgba(245, 236, 214, 0.5); margin-bottom: 36px; text-transform: uppercase;
+  }
+  .login-divider {
+    height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 24px 0; opacity: 0.5;
+  }
+  .field-label {
+    display: block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px; font-weight: 500;
+  }
+  .login input {
+    width: 100%; padding: 14px 16px; margin-bottom: 18px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(232, 201, 122, 0.18); border-radius: 10px;
+    color: var(--ivory); font-family: 'Inter', sans-serif; font-size: 15px;
+    transition: all 0.25s ease;
+  }
+  .login input:focus {
+    outline: none; border-color: var(--gold); background: rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 0 3px var(--glass-glow);
+  }
+  .btn-primary {
+    width: 100%; padding: 16px;
+    background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    color: var(--ink); font-weight: 700; font-size: 14px; letter-spacing: 0.25em;
+    text-transform: uppercase; border: none; border-radius: 10px; cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 16px rgba(232, 201, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(232, 201, 122, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+  .login-hint {
+    margin-top: 22px; font-size: 11px; text-align: center;
+    color: rgba(245, 236, 214, 0.45); letter-spacing: 0.05em; line-height: 1.7;
+  }
+  .login-hint code {
+    color: var(--gold); background: rgba(0,0,0,0.4);
+    padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(232,201,122,0.2);
+  }
+  .err {
+    margin-top: 14px; color: var(--red-bright); font-size: 13px;
+    text-align: center; min-height: 1em;
+  }
+
+  /* GAME */
+  #game { display: none; padding: 14px; min-height: 100vh; position: relative; z-index: 1; }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 22px; background: var(--glass);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--glass-border); border-radius: 14px;
+    margin-bottom: 14px; box-shadow: var(--shadow-soft); flex-wrap: wrap; gap: 10px;
+  }
+  .topbar-brand {
+    font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 22px;
+    background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    letter-spacing: 0.15em;
+  }
+  .topbar-info {
+    display: flex; gap: 24px; align-items: center; font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase; flex-wrap: wrap;
+  }
+  .topbar-info .label { color: rgba(245, 236, 214, 0.5); font-size: 10px; margin-right: 6px; }
+  .topbar-info .value { color: var(--gold); font-weight: 600; }
+
+  .message-banner {
+    padding: 14px 22px;
+    background: linear-gradient(90deg, rgba(232, 201, 122, 0.08), rgba(232, 201, 122, 0.15) 50%, rgba(232, 201, 122, 0.08));
+    border-left: 3px solid var(--gold); border-right: 3px solid var(--gold);
+    border-radius: 8px;
+    font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic;
+    margin-bottom: 14px; color: var(--ivory); text-align: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .scoreboard {
+    background: var(--glass);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--glass-border); border-radius: 14px;
+    padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow-soft);
+  }
+  .score-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; align-items: stretch; }
+  .score-cell { text-align: center; padding: 14px; border-radius: 10px; position: relative; overflow: hidden; }
+  .score-cell.team0 { background: linear-gradient(145deg, rgba(74,130,255,0.18), rgba(74,130,255,0.05)); border: 1px solid rgba(74,130,255,0.3); }
+  .score-cell.team1 { background: linear-gradient(145deg, rgba(232,90,90,0.18), rgba(232,90,90,0.05)); border: 1px solid rgba(232,90,90,0.3); }
+  .score-cell.mid   { background: linear-gradient(145deg, rgba(232,201,122,0.10), rgba(232,201,122,0.02)); border: 1px solid rgba(232,201,122,0.25); }
+  .score-title { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(245, 236, 214, 0.65); margin-bottom: 8px; font-weight: 500; }
+  .score-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 700;
+    line-height: 1; color: var(--gold);
+    text-shadow: 0 2px 12px rgba(232, 201, 122, 0.3);
+  }
+  .score-num.negative { color: var(--red-bright); text-shadow: 0 2px 12px rgba(232, 90, 90, 0.4); }
+  .score-sub { font-size: 11px; color: rgba(245, 236, 214, 0.6); margin-top: 6px; letter-spacing: 0.05em; }
+  .reset-btn {
+    margin-top: 10px; background: rgba(201, 58, 58, 0.2); color: var(--red-bright);
+    border: 1px solid rgba(201, 58, 58, 0.4);
+    padding: 5px 12px; border-radius: 6px; cursor: pointer;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    font-family: 'Inter', sans-serif; transition: all 0.2s;
+  }
+  .reset-btn:hover { background: rgba(201, 58, 58, 0.35); border-color: var(--red-bright); }
+
+  /* TABLE */
+  .table {
+    display: grid;
+    grid-template-areas:
+      ".    top    ."
+      "left center right"
+      ".    bottom .";
+    grid-template-columns: 1fr 2.4fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 14px; min-height: 540px;
+  }
+  .seat-top    { grid-area: top; }
+  .seat-bottom { grid-area: bottom; }
+  .seat-left   { grid-area: left; }
+  .seat-right  { grid-area: right; }
+  .center      { grid-area: center; }
+
+  .seat {
+    background: var(--glass);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--glass-border); border-radius: 14px;
+    padding: 14px 16px; box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease; position: relative;
+  }
+  .seat.team0 { background: linear-gradient(145deg, rgba(74,130,255,0.10), rgba(20,40,30,0.5)); border-color: rgba(74,130,255,0.25); }
+  .seat.team1 { background: linear-gradient(145deg, rgba(232,90,90,0.10), rgba(20,40,30,0.5)); border-color: rgba(232,90,90,0.25); }
+  .seat.active {
+    border-color: var(--gold);
+    box-shadow: var(--shadow-soft), 0 0 24px rgba(232, 201, 122, 0.4), inset 0 0 0 1px var(--gold);
+    animation: pulseActive 2s ease-in-out infinite;
+  }
+  @keyframes pulseActive {
+    0%, 100% { box-shadow: var(--shadow-soft), 0 0 24px rgba(232,201,122,0.35), inset 0 0 0 1px var(--gold); }
+    50%      { box-shadow: var(--shadow-soft), 0 0 36px rgba(232,201,122,0.6), inset 0 0 0 1px var(--gold-bright); }
+  }
+  .seat-label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-bottom: 12px; font-size: 12px; }
+  .seat-name { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; color: var(--ivory); }
+  .seat-meta { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,236,214,0.55); }
+  .seat-tag { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+  .tag-declarer { background: rgba(232,201,122,0.2);  color: var(--gold-bright); border: 1px solid var(--gold); }
+  .tag-partner  { background: rgba(232,201,122,0.12); color: var(--gold);        border: 1px solid rgba(232,201,122,0.4); }
+  .tag-me       { background: rgba(120,255,150,0.15); color: #b9ffcb;             border: 1px solid rgba(120,255,150,0.4); }
+  .tag-passed   { background: rgba(180,180,180,0.15); color: #ddd;                border: 1px solid rgba(180,180,180,0.3); }
+  .tag-bid      { background: rgba(74,130,255,0.18);  color: #a8c7ff;             border: 1px solid rgba(74,130,255,0.4); }
+
+  .hand { display: flex; flex-wrap: wrap; gap: 4px; perspective: 800px; }
+
+  /* CARD */
+  .card {
+    --card-w: 60px; --card-h: 86px;
+    width: var(--card-w); height: var(--card-h);
+    background: linear-gradient(145deg, #fdfaf2 0%, #f0e8d2 100%);
+    color: var(--ink); border-radius: 7px;
+    border: 1px solid rgba(0,0,0,0.18);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.5);
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 5px 6px;
+    font-family: 'Cormorant Garamond', serif; font-weight: 700;
+    user-select: none;
+    transition: transform 0.25s cubic-bezier(.2,.8,.3,1.4), box-shadow 0.25s ease;
+    position: relative;
+  }
+  .card .corner-top {
+    font-size: 20px; line-height: 1; text-align: left;
+    font-weight: 700;
+  }
+  .card .pip {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-size: 32px; line-height: 1; opacity: 0.4;
+  }
+  .card.red { color: var(--red); }
+  .card.playable {
+    cursor: pointer;
+    box-shadow:
+      0 2px 6px rgba(0,0,0,0.4),
+      0 0 0 1.5px var(--gold),
+      0 0 14px rgba(232,201,122,0.4),
+      inset 0 0 0 1px rgba(255,255,255,0.5);
+  }
+  .card.playable:hover {
+    transform: translateY(-12px) rotateX(8deg) scale(1.06);
+    box-shadow:
+      0 14px 22px rgba(0,0,0,0.55),
+      0 0 0 1.5px var(--gold-bright),
+      0 0 22px rgba(232,201,122,0.6),
+      inset 0 0 0 1px rgba(255,255,255,0.6);
+    z-index: 10;
+  }
+  .card.disabled { opacity: 0.55; filter: grayscale(0.4); cursor: not-allowed; }
+  .card.back {
+    background: linear-gradient(135deg, #5b1a1a 0%, #2e0808 100%);
+    color: transparent;
+    border: 1px solid rgba(232, 201, 122, 0.4);
+    box-shadow:
+      0 2px 6px rgba(0,0,0,0.4),
+      inset 0 0 0 2px rgba(232,201,122,0.2),
+      inset 0 0 0 4px rgba(0,0,0,0.3);
+    position: relative;
+  }
+  .card.back::after {
+    content: "❦"; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 32px; opacity: 0.65;
+  }
+
+  /* Senin elindeki kartlar (alt seat) — en büyük ve en okunaklı */
+  #seat-bottom .card {
+    --card-w: 76px; --card-h: 110px;
+    border-radius: 8px;
+    padding: 7px 8px;
+  }
+  #seat-bottom .card .corner-top { font-size: 25px; }
+  #seat-bottom .card .pip { font-size: 42px; opacity: 0.4; }
+  #seat-bottom .hand { gap: 6px; }
+  #seat-bottom .card.playable:hover {
+    transform: translateY(-18px) rotateX(8deg) scale(1.08);
+  }
+
+  /* CENTER FELT */
+  .center-felt {
+    height: 100%; min-height: 220px;
+    background: radial-gradient(ellipse at center, rgba(22,85,60,0.6) 0%, rgba(6,32,20,0.6) 80%);
+    border: 1px solid var(--glass-border); border-radius: 18px; padding: 18px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px; position: relative;
+    box-shadow: var(--shadow-soft), inset 0 0 60px rgba(0,0,0,0.4);
+  }
+  .center-felt::before {
+    content: ""; position: absolute; inset: 8px;
+    border: 1px solid rgba(232,201,122,0.18); border-radius: 14px;
+    pointer-events: none;
+  }
+  .center-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--gold); opacity: 0.7;
+  }
+  .played-area {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 14px 28px; min-height: 90px;
+    align-items: center; justify-items: center;
+  }
+  .played-slot { text-align: center; }
+  .played-slot .player-name {
+    font-size: 10px; letter-spacing: 0.15em;
+    color: rgba(245,236,214,0.55); margin-bottom: 5px; text-transform: uppercase;
+  }
+  .last-trick-note {
+    grid-column: 1 / -1; text-align: center;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 13px; color: var(--gold); opacity: 0.75; margin-bottom: 4px;
+  }
+
+  .trump-badge-wrap { text-align: center; margin-bottom: 10px; }
+  .trump-badge {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 8px 22px;
+    background: linear-gradient(135deg, rgba(232,201,122,0.95), rgba(164,122,44,0.95));
+    color: var(--ink); border: 1px solid rgba(255,233,168,0.6); border-radius: 30px;
+    box-shadow: 0 4px 18px rgba(232,201,122,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+    font-weight: 700;
+  }
+  .trump-badge .trump-label { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; }
+  .trump-badge .trump-symbol { font-size: 26px; line-height: 1; font-family: 'Cormorant Garamond', serif; }
+  .trump-badge.red .trump-symbol { color: var(--red); }
+
+  /* ACTIONS */
+  .actions {
+    margin-top: 16px; padding: 18px 22px;
+    background: var(--glass);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--glass-border); border-radius: 14px;
+    box-shadow: var(--shadow-soft); text-align: center;
+    min-height: 64px;
+    display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;
+  }
+  .actions i { color: rgba(245,236,214,0.7); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 17px; }
+  .actions b { color: var(--gold); font-style: normal; }
+  .actions .btn {
+    padding: 11px 22px;
+    background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+    color: var(--ink); font-family: 'Inter', sans-serif; font-weight: 700;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(232,201,122,0.3), inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(232,201,122,0.5), inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+  .actions .btn-ghost {
+    background: transparent; color: var(--gold); border: 1px solid var(--gold); box-shadow: none;
+  }
+  .actions .btn-ghost:hover {
+    background: rgba(232,201,122,0.12);
+    box-shadow: 0 0 16px rgba(232,201,122,0.25);
+  }
+  .actions input {
+    padding: 11px 14px;
+    background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: 8px;
+    color: var(--ivory); font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 700; width: 80px; text-align: center;
+  }
+  .actions input:focus { outline: none; border-color: var(--gold); }
+  .trump-select { display: flex; gap: 12px; justify-content: center; }
+  .trump-select .btn-suit {
+    width: 64px; height: 64px;
+    background: linear-gradient(145deg, #fdfaf2, #e6dcb8); color: var(--ink);
+    border: 2px solid rgba(232,201,122,0.5); border-radius: 10px;
+    font-size: 36px; font-family: 'Cormorant Garamond', serif; font-weight: 700;
+    cursor: pointer; transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  }
+  .btn-suit.red { color: var(--red); }
+  .btn-suit:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.5), 0 0 18px rgba(232,201,122,0.5);
+    border-color: var(--gold-bright);
+  }
+
+  @media (max-width: 900px) {
+    .table { grid-template-columns: 1fr 2fr 1fr; min-height: 460px; }
+    .card { --card-w: 50px; --card-h: 72px; }
+    .card .corner-top { font-size: 17px; }
+    .card .pip { font-size: 26px; }
+    #seat-bottom .card { --card-w: 62px; --card-h: 90px; }
+    #seat-bottom .card .corner-top { font-size: 21px; }
+    #seat-bottom .card .pip { font-size: 34px; }
+    .score-num { font-size: 32px; }
+    .login h1 { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <div class="login-crest">— Le Salon Privé —</div>
+  <h1>BATAK</h1>
+  <div class="login-subtitle">Eşli · 2 v 2</div>
+  <div class="login-divider"></div>
+  <label class="field-label" for="nameInput">İsim</label>
+  <input id="nameInput" placeholder="Masaya oturacak isim" maxlength="16" />
+  <label class="field-label" for="passInput">Salon Şifresi</label>
+  <input id="passInput" placeholder="••••••••" type="password" />
+  <button class="btn-primary" onclick="join()">Masaya Otur</button>
+  <div class="err" id="loginErr"></div>
+  <div class="login-hint">
+    Varsayılan şifre: <code>batak123</code><br>
+    Maksimum 4 oyuncu · Takımlar 0+2 ve 1+3
+  </div>
+</div>
+
+<div id="game">
+  <div class="topbar">
+    <div class="topbar-brand">BATAK · LE SALON</div>
+    <div class="topbar-info">
+      <div><span class="label">Oyuncu</span><span class="value" id="meName">—</span></div>
+      <div><span class="label">Koltuk</span><span class="value" id="meSeat">—</span></div>
+      <div><span class="label">Takım</span><span class="value" id="meTeam">—</span></div>
+      <div><span class="label">Faz</span><span class="value" id="phase">—</span></div>
+    </div>
+  </div>
+
+  <div class="message-banner" id="msg">Masa açılıyor...</div>
+
+  <div class="scoreboard">
+    <div class="score-row">
+      <div class="score-cell team0">
+        <div class="score-title">Takım 0 · Mavi</div>
+        <div class="score-num" id="total0">0</div>
+        <div class="score-sub">Bu el · <span id="t0">0</span> el</div>
+      </div>
+      <div class="score-cell mid">
+        <div class="score-title">Tur</div>
+        <div class="score-num" id="handNum" style="font-size:32px;">—</div>
+        <div class="score-sub">İhale · <span id="hb">—</span></div>
+        <button class="reset-btn" onclick="resetScores()">Skoru Sıfırla</button>
+      </div>
+      <div class="score-cell team1">
+        <div class="score-title">Takım 1 · Kırmızı</div>
+        <div class="score-num" id="total1">0</div>
+        <div class="score-sub">Bu el · <span id="t1">0</span> el</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table">
+    <div class="seat-top"><div class="seat" id="seat-top"></div></div>
+    <div class="seat-left"><div class="seat" id="seat-left"></div></div>
+    <div class="seat-right"><div class="seat" id="seat-right"></div></div>
+    <div class="center">
+      <div class="center-felt">
+        <div class="center-title">Yer</div>
+        <div class="played-area" id="playedArea"></div>
+      </div>
+    </div>
+    <div class="seat-bottom">
+      <div class="trump-badge-wrap" id="trumpBadgeWrap">
+        <div id="trumpBadge" class="trump-badge" style="display:none;">
+          <span class="trump-label">Koz</span>
+          <span class="trump-symbol" id="trumpSymbol">—</span>
+        </div>
+      </div>
+      <div class="seat" id="seat-bottom"></div>
+    </div>
+  </div>
+
+  <div class="actions" id="actions"></div>
+</div>
+
+<script>
+let ws = null, myId = null, mySeat = null, lastState = null;
+
+function join() {
+  const name = document.getElementById('nameInput').value.trim() || 'Player';
+  const pwd  = document.getElementById('passInput').value;
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  ws = new WebSocket(proto + '://' + location.host + '/ws/game');
+  ws.onopen = () => ws.send(JSON.stringify({ type: 'join', name: name, password: pwd }));
+  ws.onmessage = (ev) => {
+    const data = JSON.parse(ev.data);
+    if (data.type === 'error') {
+      const loginErr = document.getElementById('loginErr');
+      if (loginErr.offsetParent !== null) loginErr.innerText = data.message;
+      const a = document.getElementById('actions');
+      if (a && a.offsetParent !== null) {
+        const e = document.createElement('div');
+        e.className = 'err';
+        e.style.color = 'var(--red-bright)';
+        e.style.fontSize = '13px';
+        e.innerText = data.message;
+        a.appendChild(e);
+        setTimeout(() => e.remove(), 3500);
+      }
+    } else if (data.type === 'joined') {
+      myId  = data.playerId;
+      mySeat = data.seat;
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('game').style.display = 'block';
+      document.getElementById('meName').innerText = name;
+      document.getElementById('meSeat').innerText = mySeat;
+      document.getElementById('meTeam').innerText = mySeat % 2;
+    } else if (data.type === 'state') {
+      lastState = data.state;
+      render();
+    }
+  };
+  ws.onclose = () => { document.getElementById('loginErr').innerText = 'Sunucuyla bağlantı kesildi.'; };
+}
+
+function suitSymbol(name) { return ({SPADES:'♠',HEARTS:'♥',DIAMONDS:'♦',CLUBS:'♣'})[name] || ''; }
+function suitFromCode(c)  { return ({S:'SPADES',H:'HEARTS',D:'DIAMONDS',C:'CLUBS'})[c]; }
+function isRedCode(c)     { return c === 'H' || c === 'D'; }
+
+function cardEl(card, playable) {
+  const div = document.createElement('div');
+  const code = card.id.split('-')[0];
+  const sym = suitSymbol(suitFromCode(code));
+  div.className = 'card' + (isRedCode(code) ? ' red' : '') + (playable ? ' playable' : ' disabled');
+  div.innerHTML = '<div class="corner-top">' + card.rankLabel + '<br>' + sym + '</div>'
+                + '<div class="pip">' + sym + '</div>';
+  if (playable) div.onclick = () => ws.send(JSON.stringify({ type: 'play', cardId: card.id }));
+  return div;
+}
+function backEl() { const d = document.createElement('div'); d.className = 'card back'; return d; }
+function positionFor(seat) { const d = (seat - mySeat + 4) % 4; return ['bottom','left','top','right'][d]; }
+
+function phaseLabel(p) {
+  return ({WAITING:'Bekleniyor',BIDDING:'İhale',TRUMP_SELECTION:'Koz Seçimi',PLAYING:'Oyun',FINISHED:'El Bitti'})[p] || p;
+}
+
+function render() {
+  const s = lastState;
+  document.getElementById('phase').innerText = phaseLabel(s.phase);
+  const tb = document.getElementById('trumpBadge');
+  if (s.trump) {
+    tb.style.display = 'inline-flex';
+    document.getElementById('trumpSymbol').innerText = suitSymbol(s.trump);
+    tb.classList.toggle('red', s.trump === 'HEARTS' || s.trump === 'DIAMONDS');
+  } else {
+    tb.style.display = 'none';
+  }
+  document.getElementById('msg').innerText = s.message || '';
+  document.getElementById('t0').innerText = s.tricksTeam0;
+  document.getElementById('t1').innerText = s.tricksTeam1;
+  const tot0 = s.totalTeam0 != null ? s.totalTeam0 : 0;
+  const tot1 = s.totalTeam1 != null ? s.totalTeam1 : 0;
+  const t0el = document.getElementById('total0');
+  const t1el = document.getElementById('total1');
+  t0el.innerText = tot0;
+  t1el.innerText = tot1;
+  t0el.classList.toggle('negative', tot0 < 0);
+  t1el.classList.toggle('negative', tot1 < 0);
+  document.getElementById('handNum').innerText = s.handNumber || '—';
+  document.getElementById('hb').innerText = s.highestBid > 0 ? s.highestBid + ' (k' + s.highestBidderSeat + ')' : '—';
+
+  // İhale fazındayken "kimse 8 almazsa k? mecburen 7 alir" notu
+  const midSub = document.getElementById('hb').parentElement;
+  let forcedNote = document.getElementById('forcedNote');
+  if (s.phase === 'BIDDING' && s.highestBidderSeat < 0 && s.forcedSevenSeat != null) {
+    if (!forcedNote) {
+      forcedNote = document.createElement('div');
+      forcedNote.id = 'forcedNote';
+      forcedNote.className = 'score-sub';
+      forcedNote.style.color = 'var(--gold)';
+      forcedNote.style.marginTop = '4px';
+      midSub.parentElement.insertBefore(forcedNote, midSub.nextSibling);
+    }
+    const player = s.players.find(p => p.seat === s.forcedSevenSeat);
+    forcedNote.innerText = '⚠ Pas geçilirse: ' + (player ? player.name : 'k' + s.forcedSevenSeat) + ' 7 alır';
+  } else if (forcedNote) {
+    forcedNote.remove();
+  }
+
+  ['top','bottom','left','right'].forEach(pos => { document.getElementById('seat-' + pos).innerHTML = ''; });
+
+  for (const p of s.players) {
+    const pos = positionFor(p.seat);
+    const seatDiv = document.getElementById('seat-' + pos);
+    const isActive =
+      (s.phase === 'PLAYING' && s.currentTurn === p.seat) ||
+      (s.phase === 'BIDDING' && s.bidTurn === p.seat);
+    seatDiv.className = 'seat team' + p.team + (isActive ? ' active' : '');
+
+    const label = document.createElement('div');
+    label.className = 'seat-label';
+    const tags = [];
+    if (p.declarer)          tags.push('<span class="seat-tag tag-declarer">İhaleci</span>');
+    if (p.partnerOfDeclarer) tags.push('<span class="seat-tag tag-partner">Eş · Açık</span>');
+    if (p.seat === mySeat)   tags.push('<span class="seat-tag tag-me">Sen</span>');
+    if (p.bid > 0)           tags.push('<span class="seat-tag tag-bid">İhale ' + p.bid + '</span>');
+    if (p.passed)            tags.push('<span class="seat-tag tag-passed">Pas</span>');
+    label.innerHTML = '<span class="seat-name">' + escapeHtml(p.name) + '</span>'
+                    + '<span class="seat-meta">K' + p.seat + ' · T' + p.team + '</span>'
+                    + tags.join('');
+    seatDiv.appendChild(label);
+
+    const handDiv = document.createElement('div');
+    handDiv.className = 'hand';
+    if (p.hand) {
+      const me = s.players.find(x => x.seat === mySeat);
+      const iAmDeclarer = me && me.declarer;
+      const isMyTurn = (s.phase === 'PLAYING' && s.currentTurn === mySeat && p.seat === mySeat);
+      const isPartnerTurnAndIDeclarer = s.phase === 'PLAYING' && iAmDeclarer && p.partnerOfDeclarer && s.currentTurn === p.seat;
+      const canIPlay = isMyTurn || isPartnerTurnAndIDeclarer;
+      for (const c of p.hand) {
+        const playable = canIPlay && canPlay(c, p.hand, s.leadSuit);
+        handDiv.appendChild(cardEl(c, playable));
+      }
+    } else {
+      for (let i = 0; i < p.handSize; i++) handDiv.appendChild(backEl());
+    }
+    seatDiv.appendChild(handDiv);
+  }
+
+  renderPlayedArea(s);
+  renderActions(s);
+}
+
+function renderPlayedArea(s) {
+  const pa = document.getElementById('playedArea');
+  pa.innerHTML = '';
+  if (s.trick && s.trick.length > 0) {
+    for (const t of s.trick) {
+      const slot = document.createElement('div');
+      slot.className = 'played-slot';
+      const nm = document.createElement('div');
+      nm.className = 'player-name';
+      const player = s.players.find(p => p.seat === t.seat);
+      nm.innerText = (player ? player.name : 'Koltuk ' + t.seat);
+      slot.appendChild(nm);
+      slot.appendChild(cardEl(t.card, false));
+      pa.appendChild(slot);
+    }
+  } else if (s.lastTrick && s.lastTrick.length > 0) {
+    const note = document.createElement('div');
+    note.className = 'last-trick-note';
+    const winner = s.players.find(p => p.seat === s.lastTrickWinner);
+    note.innerText = '— Son eli ' + (winner ? winner.name : 'koltuk ' + s.lastTrickWinner) + ' aldı —';
+    pa.appendChild(note);
+    for (const tt of s.lastTrick) {
+      const slot = document.createElement('div');
+      slot.className = 'played-slot';
+      const nm = document.createElement('div');
+      nm.className = 'player-name';
+      const pl = s.players.find(p => p.seat === tt.seat);
+      nm.innerText = (pl ? pl.name : 'Koltuk ' + tt.seat);
+      slot.appendChild(nm);
+      slot.appendChild(cardEl(tt.card, false));
+      pa.appendChild(slot);
+    }
+  }
+}
+
+function canPlay(card, hand, leadSuitName) {
+  if (!leadSuitName) return true;
+  const codeMap = {SPADES:'S',HEARTS:'H',DIAMONDS:'D',CLUBS:'C'};
+  const leadCode = codeMap[leadSuitName];
+  const cardCode = card.id.split('-')[0];
+  const trumpName = lastState && lastState.trump;
+  const trumpCode = trumpName ? codeMap[trumpName] : null;
+
+  const leadCards = hand.filter(c => c.id.startsWith(leadCode + '-'));
+  if (leadCards.length > 0) {
+    if (cardCode !== leadCode) return false;
+    const trick = (lastState && lastState.trick) || [];
+    let highestOnTable = 0, anyTrumpOnTable = false;
+    for (const t of trick) {
+      const cc = t.card.id.split('-')[0];
+      const cr = parseInt(t.card.id.split('-')[1], 10);
+      if (trumpCode && cc === trumpCode && trumpCode !== leadCode) anyTrumpOnTable = true;
+      if (cc === leadCode && cr > highestOnTable) highestOnTable = cr;
+    }
+    if (!anyTrumpOnTable && highestOnTable > 0) {
+      const myRank = parseInt(card.id.split('-')[1], 10);
+      const hasBigger = leadCards.some(c => parseInt(c.id.split('-')[1], 10) > highestOnTable);
+      if (hasBigger && myRank < highestOnTable) return false;
+    }
+    return true;
+  }
+  if (trumpName && trumpName !== leadSuitName) {
+    const hasTrump = hand.some(c => c.id.startsWith(trumpCode + '-'));
+    if (hasTrump) return cardCode === trumpCode;
+  }
+  return true;
+}
+
+function renderActions(s) {
+  const a = document.getElementById('actions');
+  a.innerHTML = '';
+  if (s.phase === 'WAITING') {
+    a.innerHTML = '<i>Masada 4 oyuncu bekleniyor (' + s.players.length + '/4)…</i>';
+  } else if (s.phase === 'BIDDING' && s.bidTurn === mySeat) {
+    const min = Math.max(8, s.highestBid + 1);
+    const lbl = document.createElement('span');
+    lbl.innerHTML = '<i>İhalen (min ' + min + '):</i>';
+    a.appendChild(lbl);
+    const inp = document.createElement('input');
+    inp.type = 'number'; inp.id = 'bidAmt'; inp.value = min; inp.min = min; inp.max = 13;
+    a.appendChild(inp);
+    const b = document.createElement('button');
+    b.className = 'btn'; b.innerText = 'İhale Al';
+    b.onclick = () => { const v = parseInt(document.getElementById('bidAmt').value, 10); ws.send(JSON.stringify({ type: 'bid', amount: v })); };
+    a.appendChild(b);
+    const p = document.createElement('button');
+    p.className = 'btn btn-ghost'; p.innerText = 'Pas';
+    p.onclick = () => ws.send(JSON.stringify({ type: 'bid', amount: 0 }));
+    a.appendChild(p);
+  } else if (s.phase === 'TRUMP_SELECTION') {
+    const me = s.players.find(p => p.seat === mySeat);
+    if (me && me.declarer) {
+      const lbl = document.createElement('span');
+      lbl.innerHTML = '<i>Kozunu seç:</i>';
+      a.appendChild(lbl);
+      const div = document.createElement('div');
+      div.className = 'trump-select';
+      ['H','S','D','C'].forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'btn-suit' + ((c === 'H' || c === 'D') ? ' red' : '');
+        b.innerText = suitSymbol(suitFromCode(c));
+        b.onclick = () => ws.send(JSON.stringify({ type: 'trump', suit: c }));
+        div.appendChild(b);
+      });
+      a.appendChild(div);
+    } else {
+      a.innerHTML = '<i>İhaleci kozu seçiyor…</i>';
+    }
+  } else if (s.phase === 'PLAYING' && s.currentTurn === mySeat) {
+    a.innerHTML = '<i>Bir karta tıkla.</i>';
+  } else if (s.phase === 'FINISHED') {
+    const b = document.createElement('button');
+    b.className = 'btn'; b.innerText = 'Yeni El';
+    b.onclick = () => ws.send(JSON.stringify({ type: 'newHand' }));
+    a.appendChild(b);
+  } else if (s.phase === 'PLAYING') {
+    const player = s.players.find(p => p.seat === s.currentTurn);
+    const me = s.players.find(p => p.seat === mySeat);
+    if (me && me.declarer && player && player.partnerOfDeclarer) {
+      a.innerHTML = '<i><b>Eşinin sırası</b> — kartlarını sen oyna.</i>';
+    } else {
+      a.innerHTML = '<i>' + (player ? player.name : 'koltuk ' + s.currentTurn) + ' oynuyor…</i>';
+    }
+  } else if (s.phase === 'BIDDING') {
+    const player = s.players.find(p => p.seat === s.bidTurn);
+    a.innerHTML = '<i>' + (player ? player.name : 'koltuk ' + s.bidTurn) + ' ihale alıyor…</i>';
+  }
+}
+
+function escapeHtml(t) {
+  return String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+function resetScores() {
+  if (confirm('Skor tablosu sıfırlanacak. Emin misin?')) {
+    ws.send(JSON.stringify({ type: 'resetScores' }));
+  }
+}
+</script>
+</body>
+</html>
